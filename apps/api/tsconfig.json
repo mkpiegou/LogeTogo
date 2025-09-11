@@ -1,13 +1,56 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src",
+    // 🎯 Cible moderne pour performance maximale
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    
+    // 📦 Support des modules ES et imports TypeScript
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    
+    // 🔒 Sécurité TypeScript maximale (meilleures pratiques)
+    "strict": true,                           // Active toutes les vérifications strictes
+    "noUnusedLocals": true,                   // Erreur sur variables non utilisées
+    "noUnusedParameters": true,               // Erreur sur paramètres non utilisés
+    "exactOptionalPropertyTypes": true,       // Types optionnels exacts
+    "noImplicitReturns": true,               // Toutes les branches doivent retourner
+    "noFallthroughCasesInSwitch": true,      // Switch cases explicites
+    "noUncheckedIndexedAccess": true,        // Vérification accès tableau/objet
+    "noImplicitOverride": true,              // Override explicites
+    
+    // ⚡ Optimisations de performance
+    "skipLibCheck": true,                    // Skip vérification libs externes
+    "forceConsistentCasingInFileNames": true,
+    
+    // 🗺️ Chemins pour imports propres
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "@/*": ["src/*"],                      // @/config au lieu de ../../config
+      "@/types/*": ["src/types/*"],
+      "@/utils/*": ["src/utils/*"]
+    },
+    
+    // 📂 Configuration de sortie
+    "outDir": "dist",
+    "rootDir": "src",
+    
+    // 🏷️ Types globaux
+    "types": ["node"]
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "tests"]
+  
+  // 📁 Fichiers inclus/exclus
+  "include": [
+    "src/**/*",
+    "tests/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "coverage"
+  ]
 }
