@@ -1,0 +1,23 @@
+name: ✨ Feature Request
+description: Nouvelle fonctionnalité
+title: "[FEATURE] "
+labels: ["type:feature", "status:needs-triage"]
+body:
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 🎯 Priorité
+      options:
+        - Haute (Critique)
+        - Moyenne (Important)
+        - Basse (Nice to have)
+    validations:
+      required: true
+      
+  - type: textarea
+    id: description
+    attributes:
+      label: 💡 Description
+      description: Description de la fonctionnalité
+    validations:
+      required: true
