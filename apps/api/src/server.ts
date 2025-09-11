@@ -9,6 +9,8 @@ import Fastify, {
 } from 'fastify';
 import prismaPlugin from './plugins/prisma.js';
 import routesPlugin from './routes/index.js';
+import securityPlugin from './plugins/security.js';
+import swaggerPlugin from './plugins/swagger.js';
 
 /**
  * 🔧 Variables d'environnement avec valeurs par défaut sécurisées
@@ -87,11 +89,17 @@ export async function createServer(): Promise<FastifyInstance> {
       host: HOST,
     });
 
+    // 🔌 Enregistrement du plugin Security
+    await server.register(securityPlugin);
+
     // 🔌 Enregistrement du plugin Prisma
     await server.register(prismaPlugin);
 
     // 🛣️ Enregistrement des routes
     await server.register(routesPlugin);
+
+    // 🔌 Enregistrement du plugin Swagger
+    await server.register(swaggerPlugin);
 
     // 🏥 Route de health check optimisée
     server.get('/health', {
