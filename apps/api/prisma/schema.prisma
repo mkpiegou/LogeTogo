@@ -1,0 +1,60 @@
+// LogeTogo/apps/api/prisma/schema.prisma
+// 🗄️ Schéma Prisma de BASE pour Issue #1 uniquement
+// 
+// ⚠️ IMPORTANT: Ceci est un schéma MINIMAL pour tester la connexion
+// Le schéma complet sera créé dans l'Issue #2
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 🧪 Modèle de test pour vérifier la connexion DB
+// Ce modèle simple nous permet de tester que tout fonctionne
+model HealthCheck {
+  id        String   @id @default(cuid())
+  status    String   @default("healthy")
+  message   String?
+  timestamp DateTime @default(now())
+  
+  // Index pour les requêtes de monitoring
+  @@index([timestamp])
+  @@map("health_checks")
+}
+
+// 👤 Modèle User TRÈS basique pour Issue #1
+// Sera étendu massivement dans Issue #2
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  firstName String
+  lastName  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Index pour les recherches par email
+  @@index([email])
+  @@map("users")
+}
+
+// 🏠 Modèle Property TRÈS basique pour Issue #1  
+// Sera étendu massivement dans Issue #2
+model Property {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  price       Int      // Prix en FCFA (centimes pour précision)
+  city        String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Index pour les recherches courantes
+  @@index([city, isActive])
+  @@index([price])
+  @@map("properties")
+}

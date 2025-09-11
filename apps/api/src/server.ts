@@ -7,6 +7,7 @@ import Fastify, {
   FastifyRequest, 
   FastifyReply 
 } from 'fastify';
+import prismaPlugin from './plugins/prisma.js';
 
 /**
  * 🔧 Variables d'environnement avec valeurs par défaut sécurisées
@@ -84,6 +85,9 @@ export async function createServer(): Promise<FastifyInstance> {
       port: PORT,
       host: HOST,
     });
+
+    // 🔌 Enregistrement du plugin Prisma
+    await server.register(prismaPlugin);
 
     // 🏥 Route de health check optimisée
     server.get('/health', {
