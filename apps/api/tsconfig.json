@@ -37,7 +37,7 @@
     
     // 📂 Configuration de sortie
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": ".",
     
     // 🏷️ Types globaux
     "types": ["node"]

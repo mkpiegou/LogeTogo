@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="13" failures="1" errors="0" time="0.093622821">
+    <testsuite name="tests/server.test.ts" timestamp="2025-09-12T16:28:23.235Z" hostname="kmivdev-OptiPlex-7020" tests="13" failures="1" errors="0" skipped="12" time="0.093622821">
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API &gt; Configuration de base &gt; devrait démarrer sans erreur" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API &gt; Configuration de base &gt; devrait avoir les plugins requis" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API &gt; Routes système &gt; GET / devrait retourner les informations de base" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API &gt; Routes système &gt; GET /api/system/health devrait retourner le status de santé" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API &gt; Routes système &gt; GET /api/system/info devrait retourner les informations système" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API &gt; Gestion d&apos;erreurs &gt; devrait retourner 404 pour une route inexistante" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API &gt; Gestion d&apos;erreurs &gt; devrait gérer les erreurs internes" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API &gt; Headers de sécurité &gt; devrait inclure les headers de sécurité Helmet" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API &gt; Headers de sécurité &gt; devrait avoir la configuration CORS" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API &gt; Documentation API &gt; GET /api-schema devrait retourner le schéma OpenAPI" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API &gt; Documentation API &gt; GET /docs devrait être accessible en développement" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API &gt; Rate Limiting &gt; devrait appliquer le rate limiting après plusieurs requêtes" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/server.test.ts" name="Serveur LogeTogo API" time="0.091308822">
+            <system-err>
+Erreur lors de la création du serveur: AssertionError [ERR_ASSERTION]: The dependency &apos;@fastify/swagger&apos; of plugin &apos;@fastify/swagger-ui&apos; is not registered
+    at /home/kmivdev/Bureau/projects/LogeTogo/node_modules/[4mfastify[24m/lib/pluginUtils.js:71:5
+    at Array.forEach (&lt;anonymous&gt;)
+    at Object.checkDependencies (/home/kmivdev/Bureau/projects/LogeTogo/node_modules/[4mfastify[24m/lib/pluginUtils.js:70:16)
+    at Object.registerPlugin (/home/kmivdev/Bureau/projects/LogeTogo/node_modules/[4mfastify[24m/lib/pluginUtils.js:150:21)
+    at Boot.override (/home/kmivdev/Bureau/projects/LogeTogo/node_modules/[4mfastify[24m/lib/pluginOverride.js:28:57)
+    at Boot._loadPlugin (/home/kmivdev/Bureau/projects/LogeTogo/node_modules/[4mavvio[24m/boot.js:425:25)
+[90m    at processTicksAndRejections (node:internal/process/task_queues:90:21)[39m {
+  generatedMessage: [33mfalse[39m,
+  code: [32m&apos;ERR_ASSERTION&apos;[39m,
+  actual: [33mfalse[39m,
+  expected: [33mtrue[39m,
+  operator: [32m&apos;==&apos;[39m
+}
+
+            </system-err>
+            <failure message="The dependency &apos;@fastify/swagger&apos; of plugin &apos;@fastify/swagger-ui&apos; is not registered" type="AssertionError">
+AssertionError: The dependency &apos;@fastify/swagger&apos; of plugin &apos;@fastify/swagger-ui&apos; is not registered
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ ../../node_modules/fastify/lib/pluginUtils.js:71:5
+ ❯ Object.checkDependencies ../../node_modules/fastify/lib/pluginUtils.js:70:16
+ ❯ Object.registerPlugin ../../node_modules/fastify/lib/pluginUtils.js:150:21
+ ❯ Boot.override ../../node_modules/fastify/lib/pluginOverride.js:28:57
+ ❯ Boot._loadPlugin ../../node_modules/avvio/boot.js:425:25
+            </failure>
+        </testcase>
+    </testsuite>
+</testsuites>
