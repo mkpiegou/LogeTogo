@@ -6,7 +6,7 @@ import fp from 'fastify-plugin';
 
 // Import des routes par domaine (sera étendu dans les prochaines issues)
 import systemRoutes from './system.ts';
-import testRoutes from './test.ts';
+import * as basicTest from './basic.Test.ts';
 
 /**
  * 🛣️ Plugin principal d'enregistrement des routes
@@ -27,7 +27,8 @@ const routesPlugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
 
   // 🧪 Routes de test (pour développement seulement)
   if (process.env.NODE_ENV === 'development') {
-    await fastify.register(testRoutes, { prefix: '/api/test' });
+    // Commenté car basic.Test.ts est un fichier de test, pas de routes
+    // await fastify.register(basicTest.routes, { prefix: '/api/test' });
   }
 
   // 📋 Liste des routes enregistrées (log informatif)
