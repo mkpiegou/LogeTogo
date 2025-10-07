@@ -161,7 +161,15 @@ const prismaPlugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
 };
 
 // 🚀 Export du plugin avec fastify-plugin
+
 export default fp(prismaPlugin, {
   name: 'prisma',
-  dependencies: [], // Pas de dépendances pour ce plugin de base
+  dependencies: [],
 });
+
+// Export d’un service Prisma pour les tests/unitaires
+export class PrismaService extends PrismaClient {
+  constructor() {
+    super();
+  }
+}

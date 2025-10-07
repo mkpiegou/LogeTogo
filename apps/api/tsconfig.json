@@ -40,7 +40,7 @@
     "rootDir": "src",
     
     // 🏷️ Types globaux
-    "types": ["node"]
+  "types": ["node", "jest"]
   },
   
   // 📁 Fichiers inclus/exclus

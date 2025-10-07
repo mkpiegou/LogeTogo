@@ -9,7 +9,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "type-check": "tsc --noEmit",
-    "test": "echo 'Tests à implémenter' && exit 0"
+  "test": "jest --config jest.config.cjs"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
