@@ -3,6 +3,9 @@
 // 
 // ⚠️ IMPORTANT: Ceci est un schéma MINIMAL pour tester la connexion
 // Le schéma complet sera créé dans l'Issue #2
+// 
+// 📝 NOTE: SQLite est utilisé pour les tests en développement
+// En production, utiliser PostgreSQL: provider = "postgresql"
 
 generator client {
   provider = "prisma-client-js"
