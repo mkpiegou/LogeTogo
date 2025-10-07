@@ -2,7 +2,7 @@
 // 🔌 Plugin Fastify pour Prisma ORM - Version TypeScript Strict Corrigée
 
 import { FastifyInstance, FastifyPluginAsync } from 'fastify';
-import { PrismaClient, Prisma } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import fp from 'fastify-plugin';
 
 // 🏗️ Déclaration du type pour TypeScript
@@ -19,7 +19,7 @@ const createPrismaClient = (): PrismaClient => {
   const isDev = process.env.NODE_ENV === 'development';
   
   // 📊 Configuration des logs selon l'environnement
-  const logConfig: Prisma.LogLevel[] | Prisma.LogDefinition[] = isDev 
+  const logConfig = isDev 
     ? [
         { level: 'query', emit: 'event' },   
         { level: 'info', emit: 'stdout' },   
@@ -31,7 +31,7 @@ const createPrismaClient = (): PrismaClient => {
       ];
 
   return new PrismaClient({
-    log: logConfig,
+    log: logConfig as any,
     
     // ⚡ Configuration de la datasource sans undefined
     ...(process.env.DATABASE_URL && {
@@ -69,19 +69,19 @@ const prismaPlugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
 
   // 🔗 Test de connexion au démarrage du serveur
   try {
-    fastify.log.info('🔌 Tentative de connexion à PostgreSQL...');
+    fastify.log.info('🔌 Tentative de connexion à la base de données...');
     
     // Test de connexion basique
     await prisma.$connect();
-    fastify.log.info('✅ Connexion PostgreSQL établie avec succès');
+    fastify.log.info('✅ Connexion base de données établie avec succès');
     
-    // 🧪 Test avec une requête simple pour valider la DB
-    const dbVersion = await prisma.$queryRaw<Array<{ version: string }>>`SELECT version()`;
-    const versionInfo = dbVersion[0]?.version?.split(' ').slice(0, 3).join(' ') ?? 'Version inconnue';
+    // 🧪 Test avec une requête simple pour valider la DB (compatible tous providers)
+    await prisma.$queryRaw`SELECT 1 as test`;
     
     fastify.log.info({ 
-      version: versionInfo 
-    }, '🗄️ Version PostgreSQL détectée');
+      provider: process.env.DATABASE_URL?.startsWith('file:') ? 'SQLite' : 
+                process.env.DATABASE_URL?.startsWith('postgres') ? 'PostgreSQL' : 'Unknown'
+    }, '🗄️ Base de données connectée');
     
     // 📊 Test de performance de la connexion
     const startTime = Date.now();
@@ -99,27 +99,24 @@ const prismaPlugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
     fastify.log.error({
       error: errorMessage,
       databaseUrl: process.env.DATABASE_URL?.replace(/:\/\/[^@]*@/, '://***@') ?? 'Non configurée',
-    }, '💥 Erreur de connexion PostgreSQL');
+    }, '💥 Erreur de connexion base de données');
     
     // 🛠️ Messages d'aide pour debug
     fastify.log.error(`
     🔍 Vérifications suggérées pour la base de données:
     
-    1. PostgreSQL est-il démarré ?
-       → sudo systemctl status postgresql (Linux)
-       → brew services list | grep postgresql (macOS)
-    
-    2. La base de données existe-t-elle ?
-       → psql -h localhost -U logetogo_user -d logetogo_dev
-    
-    3. Les credentials sont-ils corrects ?
+    1. La base de données est-elle accessible ?
        → Vérifier DATABASE_URL dans .env
     
-    4. Le port PostgreSQL est-il accessible ?
-       → nc -zv localhost 5432
+    2. Les credentials sont-ils corrects ?
+       → PostgreSQL: postgresql://user:pass@host:5432/db
+       → SQLite: file:./test.db
+    
+    3. Le provider Prisma correspond-il à la DATABASE_URL ?
+       → Vérifier prisma/schema.prisma
     `);
     
-    throw new Error(`Impossible de se connecter à PostgreSQL: ${errorMessage}`);
+    throw new Error(`Impossible de se connecter à la base de données: ${errorMessage}`);
   }
 
   // 🔌 Décoration de l'instance Fastify

@@ -37,10 +37,9 @@
     
     // 📂 Configuration de sortie
     "outDir": "dist",
-    "rootDir": "src",
     
     // 🏷️ Types globaux
-    "types": ["node"]
+    "types": ["node", "vitest/globals"]
   },
   
   // 📁 Fichiers inclus/exclus
