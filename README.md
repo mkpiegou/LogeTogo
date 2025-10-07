@@ -17,21 +17,27 @@
 
 ## 🏗️ Architecture Monorepo
 
+
+## 📁 Organisation du projet (réelle)
+
 ```
-logetogo-platform/
+LogeTogo/
 ├── apps/
-│   ├── api/          # Backend Fastify + TypeScript
-│   ├── web/          # Frontend Next.js 14
-│   ├── mobile/       # React Native + Expo
-│   ├── ai-service/   # Services IA Python
-│   └── admin/        # Panel d'administration
-├── packages/
-│   ├── ui/           # Design System
-│   ├── shared/       # Utilitaires partagés
-│   ├── database/     # Schémas Prisma
-│   └── types/        # Types TypeScript
-└── infrastructure/   # DevOps & Déploiement
+│   └── api/
+│       ├── prisma/        # Schéma et migrations Prisma
+│       ├── src/
+│       │   ├── plugins/   # Plugins (Prisma, sécurité, Swagger)
+│       │   └── routes/    # Routes API
+│       ├── package.json
+│       └── tsconfig.json
+├── package.json
+├── tsconfig.base.json
+├── tsconfig.json
+├── turbo.json
+└── README.md
 ```
+
+Branche de développement : `codeGeekPro`
 
 ## 🚀 Démarrage Rapide
 
