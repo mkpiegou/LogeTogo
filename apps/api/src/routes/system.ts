@@ -142,16 +142,29 @@ const systemRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
     }
   }, async (request: FastifyRequest, reply: FastifyReply) => {
     
-    // Compter les tables de la base de données
+    // Compter les tables de la base de données (database-agnostic)
     let tablesCount = 0;
     try {
-      const tables = await fastify.prisma.$queryRaw<Array<{ count: bigint }>>`
-        SELECT COUNT(*) as count 
-        FROM information_schema.tables 
-        WHERE table_schema = 'public' 
-        AND table_type = 'BASE TABLE'
-      `;
-      tablesCount = Number(tables[0]?.count ?? 0);
+      // Pour SQLite, utiliser sqlite_master, pour PostgreSQL information_schema
+      const isSQLite = process.env.DATABASE_URL?.startsWith('file:');
+      
+      if (isSQLite) {
+        const tables = await fastify.prisma.$queryRaw<Array<{ count: bigint }>>`
+          SELECT COUNT(*) as count 
+          FROM sqlite_master 
+          WHERE type = 'table' 
+          AND name NOT LIKE 'sqlite_%'
+        `;
+        tablesCount = Number(tables[0]?.count ?? 0);
+      } else {
+        const tables = await fastify.prisma.$queryRaw<Array<{ count: bigint }>>`
+          SELECT COUNT(*) as count 
+          FROM information_schema.tables 
+          WHERE table_schema = 'public' 
+          AND table_type = 'BASE TABLE'
+        `;
+        tablesCount = Number(tables[0]?.count ?? 0);
+      }
     } catch (error) {
       fastify.log.warn('Impossible de compter les tables');
     }
